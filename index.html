@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <body>
+    <h2>Upload File (PDF, DOCX, PPTX)</h2>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="file" required>
+      <button type="submit">Upload</button>
+    </form>
+
+    {% if content %}
+      <h3>Extracted Content:</h3>
+      <pre>{{ content }}</pre>
+    {% endif %}
+  </body>
+</html>
