@@ -20,7 +20,7 @@ def index():
         path = os.path.join(UPLOAD_FOLDER, filename)
         f.save(path)
 
-        content = extract_file_content(path, filename)
+        content = extract_file_content(path)
         os.remove(path)  # Delete after extraction
 
     return render_template("index.html", content=content)
@@ -36,22 +36,19 @@ def extract():
     path = os.path.join(UPLOAD_FOLDER, filename)
     f.save(path)
 
-    content = extract_file_content(path, filename)
+    content = extract_file_content(path)
     os.remove(path)  # Delete after extraction
 
-    if content == "Unsupported file type.":
-        return jsonify({"error": content}), 400
+    if "Error" in content:
+        return jsonify({"error": content}), 500
 
     return jsonify({"content": content})
 
 # Core Extractor using textract
-def extract_file_content(path, filename):
+def extract_file_content(path):
     try:
-        if filename.endswith((".pdf", ".docx", ".pptx")):
-            text = textract.process(path)
-            return text.decode("utf-8", errors="ignore")
-        else:
-            return "Unsupported file type."
+        text = textract.process(path)
+        return text.decode("utf-8", errors="ignore")
     except Exception as e:
         return f"Error extracting content: {str(e)}"
 
