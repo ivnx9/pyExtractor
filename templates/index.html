@@ -1,15 +1,29 @@
-<!doctype html>
-<html>
-  <body>
-    <h2>Upload File (PDF, DOCX, PPTX)</h2>
-    <form method="post" enctype="multipart/form-data">
-      <input type="file" name="file" required>
-      <button type="submit">Upload</button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Extractor</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+    input[type="file"] { margin-top: 10px; }
+    button { margin-top: 10px; padding: 10px 20px; }
+    textarea { width: 100%; height: 300px; margin-top: 20px; }
+  </style>
+</head>
+<body>
 
-    {% if content %}
-      <h3>Extracted Content:</h3>
-      <pre>{{ content }}</pre>
-    {% endif %}
-  </body>
+  <h2>Upload a File for Text Extraction</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" required />
+    <br/>
+    <button type="submit">Extract Text</button>
+  </form>
+
+  {% if content %}
+    <h3>Extracted Text:</h3>
+    <textarea readonly>{{ content }}</textarea>
+  {% endif %}
+
+</body>
 </html>
