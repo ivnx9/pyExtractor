@@ -23,7 +23,7 @@ def index():
         if filename.endswith(".pdf"):
             with open(path, "rb") as pdf:
                 reader = PyPDF2.PdfReader(pdf)
-                content = "\n".join([page.extract_text() for page in reader.pages])
+                content = "\n".join([page.extract_text() or "" for page in reader.pages])
         elif filename.endswith(".docx"):
             doc = docx.Document(path)
             content = "\n".join([p.text for p in doc.paragraphs])
@@ -38,4 +38,5 @@ def index():
     return render_template("index.html", content=content)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
